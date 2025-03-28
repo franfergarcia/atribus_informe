@@ -1,0 +1,15 @@
+2025-03-28 14:39:08,712 - __main__ - INFO - Iniciando análisis de tweets
+2025-03-28 14:39:08,713 - __main__ - INFO - Usando archivo de datos: data/tweets_valencia.json
+2025-03-28 14:39:08,714 - __main__ - INFO - Usando archivo de caché: categorized_tweets\None_gemma3-latest.json
+2025-03-28 14:39:08,714 - __main__ - INFO - Cargando tweets desde data/tweets_valencia.json
+2025-03-28 14:39:08,741 - __main__ - INFO - Se han cargado 1551 tweets correctamente
+2025-03-28 14:39:08,744 - __main__ - INFO - Categorizando tweets
+2025-03-28 14:39:08,745 - tweet_categorizer - INFO - Extrayendo categorías de los tweets usando gemma3:latest
+2025-03-28 14:39:29,645 - tweet_categorizer - INFO - Se extrajeron 8 categorías: ['**Protestas y Manifestaciones**', '**La DANA de Valencia**', '**Política Local en Valencia**', '**Instituciones y Gobierno Valenciano**', '**Diseño y Moda (IDV)**', '**Eventos y Presentaciones en Valencia**', '**Interacciones y Debate en Redes Sociales**', '**Críticas y Responsabilidades**']
+2025-03-28 14:39:29,646 - tweet_categorizer - INFO - Categorías finales: ['**Protestas y Manifestaciones**', '**La DANA de Valencia**', '**Política Local en Valencia**', '**Instituciones y Gobierno Valenciano**', '**Diseño y Moda (IDV)**', '**Eventos y Presentaciones en Valencia**', '**Interacciones y Debate en Redes Sociales**', '**Críticas y Responsabilidades**']
+2025-03-28 14:39:29,646 - tweet_categorizer - INFO - Categorizando tweet 1/1551
+2025-03-28 14:39:30,065 - tweet_categorizer - INFO - Categorizando tweet 2/1551
+2025-03-28 14:39:30,480 - tweet_categorizer - INFO - Categorizando tweet 3/1551
+2025-03-28 14:39:30,910 - tweet_categorizer - INFO - Categorizando tweet 4/1551
+2025-03-28 14:39:31,283 - tweet_categorizer - INFO - Categorizando tweet 5/1551
+2025-03-28 14:39:31,674 - tweet_categorizer - INFO - Categorizando tweet 6/1551

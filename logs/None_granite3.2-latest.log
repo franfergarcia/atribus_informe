@@ -1,0 +1,27 @@
+2025-03-28 14:37:29,686 - __main__ - INFO - Iniciando análisis de tweets
+2025-03-28 14:37:29,687 - __main__ - INFO - Usando archivo de datos: data/tweets_valencia.json
+2025-03-28 14:37:29,687 - __main__ - INFO - Usando archivo de caché: categorized_tweets\None_granite3.2-latest.json
+2025-03-28 14:37:29,687 - __main__ - INFO - Cargando tweets desde data/tweets_valencia.json
+2025-03-28 14:37:29,727 - __main__ - INFO - Se han cargado 1551 tweets correctamente
+2025-03-28 14:37:29,728 - __main__ - INFO - Categorizando tweets
+2025-03-28 14:37:29,728 - tweet_categorizer - INFO - Extrayendo categorías de los tweets usando granite3.2:latest
+2025-03-28 14:37:51,191 - tweet_categorizer - INFO - Se extrajeron 5 categorías: ['Manifestaciones y Protestas Políticas', 'Eventos Culturales y de Moda', 'Visitas y Eventos Políticos', 'Comentarios y Debates Políticos', 'Vida Cotidiana y Actividades en Valencia']
+2025-03-28 14:37:51,191 - tweet_categorizer - INFO - Categorías finales: ['Manifestaciones y Protestas Políticas', 'Eventos Culturales y de Moda', 'Visitas y Eventos Políticos', 'Comentarios y Debates Políticos', 'Vida Cotidiana y Actividades en Valencia']
+2025-03-28 14:37:51,191 - tweet_categorizer - INFO - Categorizando tweet 1/1551
+2025-03-28 14:37:51,816 - tweet_categorizer - INFO - Categorizando tweet 2/1551
+2025-03-28 14:37:52,310 - tweet_categorizer - INFO - Categorizando tweet 3/1551
+2025-03-28 14:37:54,076 - tweet_categorizer - INFO - Categorizando tweet 4/1551
+2025-03-28 14:37:54,656 - tweet_categorizer - INFO - Categorizando tweet 5/1551
+2025-03-28 14:56:00,350 - __main__ - INFO - Iniciando análisis de tweets
+2025-03-28 14:56:00,350 - __main__ - INFO - Usando archivo de datos: data/tweets_valencia.json
+2025-03-28 14:56:00,351 - __main__ - INFO - Usando archivo de caché: categorized_tweets\None_granite3.2-latest.json
+2025-03-28 14:56:00,351 - __main__ - INFO - Cargando tweets desde data/tweets_valencia.json
+2025-03-28 14:56:00,388 - __main__ - INFO - Se han cargado 1551 tweets correctamente
+2025-03-28 14:56:00,389 - __main__ - INFO - Categorizando tweets
+2025-03-28 14:56:00,389 - tweet_categorizer - INFO - Extrayendo categorías de los tweets usando granite3.2:latest
+2025-03-28 14:56:29,675 - tweet_categorizer - INFO - Se extrajeron 7 categorías: ['Deporte', 'Música y Entretenimiento', 'Viajes y Turismo', 'Deportes Electrónicos y Videojuegos', 'Deportes Individuales y Fitness', 'Noticias y Actualidad', 'Cultura y Tradiciones']
+2025-03-28 14:56:29,675 - tweet_categorizer - INFO - Categorías finales: ['Deporte', 'Música y Entretenimiento', 'Viajes y Turismo', 'Deportes Electrónicos y Videojuegos', 'Deportes Individuales y Fitness', 'Noticias y Actualidad', 'Cultura y Tradiciones']
+2025-03-28 14:56:29,675 - tweet_categorizer - INFO - Categorizando tweet 1/1551
+2025-03-28 14:56:30,312 - tweet_categorizer - INFO - Categorizando tweet 2/1551
+2025-03-28 14:56:30,661 - tweet_categorizer - INFO - Categorizando tweet 3/1551
+2025-03-28 14:56:31,163 - tweet_categorizer - INFO - Categorizando tweet 4/1551
