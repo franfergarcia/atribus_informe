@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-Módulo para categorizar tweets utilizando el modelo Gemma3 (12b).
+Módulo para categorizar tweets utilizando un modelo de OpenAI.
 """
 
 import logging
 import json
-import requests
+import openai
 from typing import List, Dict, Any, Set, Tuple
 from collections import defaultdict
 import re
@@ -18,9 +18,11 @@ import random
 # Cargar variables de entorno
 load_dotenv()
 
-# URL de la API de Ollama y Nombre del Modelo (cargados desde .env)
-OLLAMA_API_URL = os.getenv("OLLAMA_API_URL")
+# Nombre del modelo de OpenAI (cargado desde .env)
 MODEL_NAME = os.getenv("MODEL_NAME")
+
+# Configurar la clave de API de OpenAI desde la variable de entorno
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Configuraciones de extracción de categorías desde .env
 CATEGORY_SAMPLE_SIZE = int(os.getenv("CATEGORY_SAMPLE_SIZE", 200)) # Tamaño de muestra para extracción
@@ -28,10 +30,10 @@ MIN_CATEGORIES = int(os.getenv("MIN_CATEGORIES", 5))           # Mínimo de cate
 MAX_CATEGORIES = int(os.getenv("MAX_CATEGORIES", 8))           # Máximo de categorías a extraer
 
 # Comprobar variables críticas
-if not OLLAMA_API_URL or not MODEL_NAME:
-    logger = logging.getLogger(__name__) 
-    logger.error("Las variables OLLAMA_API_URL y MODEL_NAME deben estar definidas en el archivo .env")
-    raise ValueError("Faltan variables críticas OLLAMA_API_URL o MODEL_NAME en .env")
+if not openai.api_key or not MODEL_NAME:
+    logger = logging.getLogger(__name__)
+    logger.error("Las variables OPENAI_API_KEY y MODEL_NAME deben estar definidas en el entorno")
+    raise ValueError("Faltan variables críticas OPENAI_API_KEY o MODEL_NAME")
 
 # Configuración de logging para manejar caracteres Unicode
 logger = logging.getLogger(__name__)
@@ -46,28 +48,24 @@ for handler in logger.handlers + logging.getLogger().handlers:
 
 def query_llm(prompt: str) -> str:
     """
-    Consulta al modelo LLM configurado mediante la API de Ollama.
-    
+    Consulta al modelo LLM configurado mediante la API de OpenAI.
+
     Args:
         prompt (str): Prompt para el modelo.
-        
+
     Returns:
         str: Respuesta del modelo.
     """
     try:
-        payload = {
-            "model": MODEL_NAME,
-            "prompt": prompt,
-            "stream": False,
-            "temperature": 0.2
-        }
-        
-        response = requests.post(OLLAMA_API_URL, json=payload)
-        response.raise_for_status()
-        
-        return response.json().get("response", "").strip()
-        
-    except requests.RequestException as e:
+        response = openai.ChatCompletion.create(
+            model=MODEL_NAME,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.2,
+        )
+
+        return response.choices[0].message.content.strip()
+
+    except Exception as e:
         logger.error(f"Error al consultar {MODEL_NAME}: {str(e)}")
         return ""
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Módulo para generar informes utilizando ollama.
+Módulo para generar informes utilizando la API de OpenAI.
 """
 
 import os
@@ -10,43 +10,40 @@ from datetime import datetime
 from dotenv import load_dotenv
 import logging
 from typing import Dict, List, Any
-import requests
-import time
+import openai
 import json
 
 # Cargar variables de entorno
 load_dotenv()
 
 # Obtener variables desde .env (si existen)
-OLLAMA_API_URL = os.getenv("OLLAMA_API_URL")
 MODEL_NAME = os.getenv("MODEL_NAME")
+
+# Configurar la clave de API de OpenAI
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 logger = logging.getLogger(__name__)
 
 def query_llm(prompt: str) -> str:
     """
-    Consulta al modelo {MODEL_NAME} mediante la API de Ollama.
-    
+    Consulta al modelo {MODEL_NAME} mediante la API de OpenAI.
+
     Args:
         prompt (str): Prompt para el modelo.
-        
+
     Returns:
         str: Respuesta del modelo.
     """
     try:
-        payload = {
-            "model": MODEL_NAME,
-            "prompt": prompt,
-            "stream": False,
-            "temperature": 0.7
-        }
-        
-        response = requests.post(OLLAMA_API_URL, json=payload)
-        response.raise_for_status()
-        
-        return response.json().get("response", "").strip()
-        
-    except requests.RequestException as e:
+        response = openai.ChatCompletion.create(
+            model=MODEL_NAME,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+        )
+
+        return response.choices[0].message.content.strip()
+
+    except Exception as e:
         logger.error(f"Error al consultar {MODEL_NAME}: {str(e)}")
         return "No se pudo generar el contenido debido a un error de conexión con el modelo."
 
@@ -119,7 +116,7 @@ El análisis debe ser objetivo y basado en los datos proporcionados.
 
 def generate_category_conclusion(category: str, stats: Dict[str, Any]) -> str:
     """
-    Genera una conclusión detallada para una categoría utilizando Gemma3.
+    Genera una conclusión detallada para una categoría utilizando {MODEL_NAME}.
     
     Args:
         category (str): Nombre de la categoría.
@@ -186,7 +183,7 @@ El análisis debe ser objetivo y basado en los datos proporcionados.
 
 def generate_final_summary(all_stats: Dict[str, Dict[str, Any]]) -> str:
     """
-    Genera un resumen general detallado del informe utilizando Gemma3.
+    Genera un resumen general detallado del informe utilizando {MODEL_NAME}.
     
     Args:
         all_stats (Dict[str, Dict[str, Any]]): Estadísticas de todas las categorías.

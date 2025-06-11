@@ -1,6 +1,6 @@
 # Generador Automático de Informes de Análisis de Tweets
 
-Este proyecto implementa un sistema para analizar automáticamente un conjunto de tweets. Utiliza un Modelo de Lenguaje Grande (LLM) configurado a través de Ollama para:
+Este proyecto implementa un sistema para analizar automáticamente un conjunto de tweets. Utiliza un Modelo de Lenguaje Grande (LLM) accesible mediante la API de OpenAI para:
 1.  **Extraer categorías temáticas** de una muestra de tweets.
 2.  **Clasificar** cada tweet dentro de las categorías extraídas.
 3.  **Calcular estadísticas** (distribución de sentimiento, engagement) para cada categoría.
@@ -17,13 +17,12 @@ El sistema está diseñado para ser flexible, permitiendo configurar el modelo L
 -   **Generación de Informes**: Crea informes completos en Markdown, incluyendo resúmenes, estadísticas y ejemplos por categoría.
 -   **Estructura Organizada**: Mantiene los logs, tweets categorizados (caché) y reportes finales en directorios separados.
 -   **Configuración Centralizada**: Utiliza un archivo `.env` para gestionar todas las configuraciones importantes.
--   **Manejo de Modelos**: Permite especificar fácilmente qué modelo LLM (disponible en Ollama) se debe usar.
+-   **Manejo de Modelos**: Permite especificar fácilmente qué modelo LLM de OpenAI se debe usar.
 
 ## Requisitos
 
 -   **Python 3.11**: Se recomienda usar `conda` para gestionar el entorno.
--   **Ollama**: Debe estar instalado y ejecutándose. [Instrucciones de Ollama](https://ollama.com/)
--   **Un Modelo LLM en Ollama**: El modelo especificado en `.env` (por ejemplo, `gemma3:latest`, `phi4`, `granite3.2:latest`, etc.) debe estar descargado (`ollama pull <nombre_modelo>`).
+-   **Cuenta de OpenAI** con una API key válida. La clave debe estar disponible en la variable de entorno `OPENAI_API_KEY`.
 -   **Dependencias de Python**: Listadas en `requirements.txt`.
 
 ## Instalación y Configuración
@@ -52,13 +51,9 @@ Sigue estos pasos para poner en marcha el proyecto:
     pip install -r requirements.txt
     ```
 
-4.  **Configurar Ollama**:
-    -   Asegúrate de que Ollama esté instalado y ejecutándose. Por defecto, debería estar accesible en `http://127.0.0.1:11434`.
-    -   Descarga el modelo LLM que deseas utilizar. Por ejemplo, para usar `granite3.2:latest`:
-        ```bash
-        ollama pull granite3.2:latest
-        ```
-        *Nota: Puedes usar cualquier otro modelo compatible con Ollama.*
+4.  **Configurar la API de OpenAI**:
+    -   Define la variable de entorno `OPENAI_API_KEY` con tu clave de OpenAI.
+    -   En el archivo `.env` se especifica el modelo a utilizar.
 
 5.  **Preparar Datos de Entrada**:
     -   Coloca tu archivo de tweets en formato JSON dentro del directorio `data/`. El script espera por defecto un archivo llamado `DATA_FILE`, pero puedes cambiarlo en `.env` si es necesario. Asegúrate de que cada tweet en el JSON tenga al menos las claves `text`, `sentiment`, `likes`, `retweets`, `replies`.
@@ -70,13 +65,8 @@ Sigue estos pasos para poner en marcha el proyecto:
     ```dotenv
     # --- Configuración Obligatoria ---
 
-    # URL de la API de Ollama (normalmente no necesita cambio)
-    OLLAMA_API_URL=http://127.0.0.1:11434/api/generate
-
-    # Nombre EXACTO del modelo LLM instalado en Ollama
-    # Ejemplo: MODEL_NAME=gemma3:latest
-    # Ejemplo: MODEL_NAME=mistral:7b
-    MODEL_NAME=granite3.2:latest
+    # Nombre EXACTO del modelo de OpenAI que se va a utilizar
+    MODEL_NAME=gpt-4.1-nano-2025-04-14
 
     # --- Configuración de Archivos y Directorios ---
 
@@ -204,7 +194,7 @@ atribus_informe/
 ## Solución de Problemas Comunes
 
 -   **`FileNotFoundError`**: Verifica que la ruta en `TWEET_DATA_PATH` en `.env` sea correcta y que el archivo exista. Asegúrate de ejecutar `python main.py` desde la raíz del proyecto.
--   **Errores de Conexión con Ollama**: Asegúrate de que Ollama esté ejecutándose y sea accesible en la URL especificada en `OLLAMA_API_URL`. Verifica que el `MODEL_NAME` en `.env` esté correctamente escrito y que el modelo esté descargado (`ollama list`).
+-   **Errores de Conexión con OpenAI**: verifica que la variable `OPENAI_API_KEY` esté definida y que tengas acceso a la API de OpenAI.
 -   **Errores de `KeyError`**: Revisa que tu archivo JSON de tweets contenga las claves esperadas (`text`, `sentiment`, `likes`, `retweets`, `replies`).
 -   **Proceso Lento**: La extracción de categorías y la clasificación pueden tardar, especialmente con muchos tweets o modelos LLM grandes. La caché ayuda en ejecuciones posteriores. Considera usar un `BATCH_SIZE` más pequeño si tienes problemas de memoria.
 -   **Pocas Categorías Extraídas**: Si el LLM no genera suficientes categorías (menos de `MIN_CATEGORIES`), el script se detendrá. Puedes:
